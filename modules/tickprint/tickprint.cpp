@@ -18,7 +18,7 @@ public:
     PackagePtr package = input(0).value();
     if (!package)
       return;
-    unsigned tick = read_package<unsigned>(package);
+    auto tick = read_package<unsigned>(package);
     std::cout << "tick: " << tick << std::endl;
   }
 };

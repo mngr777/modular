@@ -45,6 +45,12 @@ tickprint_la_SOURCES = modules/tickprint/tickprint.hpp modules/tickprint/tickpri
 tickprint_la_LDFLAGS = $(MODULE_FLAGS)
 tickprint_la_LIBADD = $(MODULE_LIBS)
 
+# Text
+pkgmod_LTLIBRARIES += text.la
+text_la_SOURCES = modules/text/text.hpp modules/text/text.cpp
+text_la_LDFLAGS = $(MODULE_FLAGS)
+text_la_LIBADD = $(MODULE_LIBS)
+
 # FIFO
 pkgmod_LTLIBRARIES += fifo.la
 fifo_la_SOURCES = modules/fifo/fifo.hpp modules/fifo/fifo.cpp
@@ -52,12 +58,15 @@ fifo_la_LDFLAGS = $(MODULE_FLAGS)
 fifo_la_LIBADD = $(MODULE_LIBS)
 
 ## Tests
-TESTS = test_exec1 test_ipc1
+TESTS = test_exec1 test_text1 test_ipc1
 TEST_LIBS = libmodular.la
 check_PROGRAMS = $(TESTS)
 
 test_exec1_SOURCES = tests/test_exec1.cpp
 test_exec1_LDADD = $(TEST_LIBS)
+
+test_text1_SOURCES = tests/test_text1.cpp
+test_text1_LDADD = $(TEST_LIBS)
 
 test_ipc1_SOURCES = tests/test_ipc1.cpp
 test_ipc1_LDADD = $(TEST_LIBS)
