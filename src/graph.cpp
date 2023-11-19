@@ -47,8 +47,8 @@ void Graph::Node::do_process() {
 
 // Graph
 
-Graph::NodePtr Graph::add(Processor& processor) {
-  auto node = std::make_shared<Node>(*this, processor);
+Graph::NodePtr Graph::add(Processor& processor, const ProcessorParams& params) {
+  auto node = std::make_shared<Node>(*this, processor, params);
   _nodes.push_back(node);
   return node;
 }

@@ -17,10 +17,12 @@ int main(int argc, char** argv) {
 
   modular::Graph graph;
   auto tick1 = graph.add(tick);
-  auto tick2 = graph.add(tick);
+  auto tick2 = graph.add(tick, {{"start", 10u}});
   auto tickprint1 = graph.add(tickprint);
   tick1->connect(tickprint1, 0, 0);
   tick2->connect(tickprint1, 0, 0);
+  tick1->process();
+  tick2->process();
   tick1->process();
   tick2->process();
 

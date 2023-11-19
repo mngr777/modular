@@ -4,6 +4,7 @@
 using modular::Package;
 using modular::PackagePtr;
 using modular::ProcessorInstancePtr;
+using modular::ProcessorParams;
 
 class TickprintProcessorInstance : public modular::ProcessorInstance {
 public:
@@ -22,7 +23,7 @@ public:
 
 class TickprintProcessor : public modular::Processor {
 public:
-  ProcessorInstancePtr instance() override {
+  ProcessorInstancePtr instance(const ProcessorParams& params = ProcessorParams()) override {
     return std::make_unique<TickprintProcessorInstance>();
   }
 };

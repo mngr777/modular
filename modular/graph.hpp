@@ -16,9 +16,9 @@ public:
 
   class Node {
   public:
-    Node(Graph& graph, Processor& processor):
+    Node(Graph& graph, Processor& processor, const ProcessorParams& params = ProcessorParams()):
       _graph(graph),
-      _processor(processor.instance()),
+      _processor(processor.instance(params)),
       _incoming_num(0) {}
 
     void connect(NodePtr other, unsigned output, unsigned input);
@@ -47,11 +47,11 @@ public:
     std::mutex _process_mutex;
   };
 
-  NodePtr add(ProcessorPtr processor) {
-    return add(*processor);
+  NodePtr add(ProcessorPtr processor, const ProcessorParams& params = ProcessorParams()) {
+    return add(*processor, params);
   }
 
-  NodePtr add(Processor& processor);
+  NodePtr add(Processor& processor, const ProcessorParams& params = ProcessorParams());
 
   void connect(
     NodePtr from, unsigned output,

@@ -4,16 +4,21 @@
 using modular::Package;
 using modular::PackagePtr;
 using modular::ProcessorInstancePtr;
+using modular::ProcessorParams;
 
 class TickProcessorInstance : public modular::ProcessorInstance {
 public:
-  TickProcessorInstance():
+  TickProcessorInstance(const ProcessorParams& params):
     modular::ProcessorInstance(0, 1),
-    _tick(0) {}
+    _tick(0)
+  {
+    if (params.has("start"))
+      _tick = params.get<unsigned>("start");
+  }
 
   void process() override {
     PackagePtr pkg = Package::make<unsigned>();
-    pkg->set<unsigned>(++_tick);
+    pkg->set<unsigned>(_tick++);
     output(0).update(pkg);
   }
 
@@ -24,8 +29,8 @@ private:
 
 class TickProcessor : public modular::Processor {
 public:
-  ProcessorInstancePtr instance() override {
-    return std::move(std::make_unique<TickProcessorInstance>());
+  ProcessorInstancePtr instance(const ProcessorParams& params = ProcessorParams()) override {
+    return std::move(std::make_unique<TickProcessorInstance>(params));
   }
 };
 
