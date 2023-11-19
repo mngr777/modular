@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <memory>
+#include <stdexcept>
 #include "modular/context.hpp"
 #include "modular/library.hpp"
 #include "modular/loader.hpp"
@@ -17,21 +18,22 @@ void Loader::add_path(Loader::Path path) {
 }
 
 
-bool Loader::load(const String& name) {
+void Loader::load(const String& name) {
   for (const auto& dir : _paths) {
     auto path = dir / utils::lib::filename(name);
-    if (fs::exists(path))
-      return do_load(name, path);
+    if (fs::exists(path)) {
+      do_load(name, path);
+      return;
+    }
   }
-  return false;
+  throw std::runtime_error("library not found");
 }
 
 
-bool Loader::do_load(const String& name, const Path& path) {
+void Loader::do_load(const String& name, const Path& path) {
   auto library = std::make_shared<Library>(path);
   auto module = std::make_shared<Module>(_context, library);
   _context.modules().add(name, module);
-  return true;
 }
 
 }

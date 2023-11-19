@@ -1,3 +1,4 @@
+#pragma once
 #include <filesystem>
 #include <list>
 #include "string.hpp"
@@ -15,10 +16,10 @@ public:
 
   void add_path(Path path);
 
-  bool load(const String& name);
+  void load(const String& name);
 
 private:
-  bool do_load(const String& name, const Path& path);
+  void do_load(const String& name, const Path& path);
 
   Context& _context;
   std::list<Path> _paths;

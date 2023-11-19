@@ -3,25 +3,28 @@
 
 using modular::Package;
 using modular::PackagePtr;
+using modular::Processor;
+using modular::ProcessorInstance;
 using modular::ProcessorInstancePtr;
 using modular::ProcessorParams;
+using modular::read_package;
 
-class TickprintProcessorInstance : public modular::ProcessorInstance {
+class TickprintProcessorInstance : public ProcessorInstance {
 public:
   TickprintProcessorInstance():
-    modular::ProcessorInstance(1, 0) {}
+    ProcessorInstance(1, 0) {}
 
   void process() override {
-    PackagePtr pkg = input(0).value();
-    if (!pkg)
+    PackagePtr package = input(0).value();
+    if (!package)
       return;
-    unsigned tick = pkg->get<unsigned>();
+    unsigned tick = read_package<unsigned>(package);
     std::cout << "tick: " << tick << std::endl;
   }
 };
 
 
-class TickprintProcessor : public modular::Processor {
+class TickprintProcessor : public Processor {
 public:
   ProcessorInstancePtr instance(const ProcessorParams& params = ProcessorParams()) override {
     return std::make_unique<TickprintProcessorInstance>();
