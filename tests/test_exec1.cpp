@@ -21,10 +21,10 @@ int main(int argc, char** argv) {
   auto tickprint1 = graph.add(tickprint);
   tick1->connect(tickprint1, 0, 0);
   tick2->connect(tickprint1, 0, 0);
-  tick1->process();
-  tick2->process();
-  tick1->process();
-  tick2->process();
 
-  while (graph.update()) {}
+  for (int i = 0; i < 10; i++) {
+    tick1->process();
+    tick2->process();
+    while (graph.update()) {}
+  }
 }
