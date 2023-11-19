@@ -47,7 +47,15 @@ public:
     std::mutex _process_mutex;
   };
 
+  NodePtr add(ProcessorPtr processor) {
+    return add(*processor);
+  }
+
   NodePtr add(Processor& processor);
+
+  void connect(
+    NodePtr from, unsigned output,
+    NodePtr to, unsigned input);
 
   bool update();
 
@@ -60,10 +68,6 @@ public:
   const NodeList& nodes() const {
     return _nodes;
   }
-
-  void connect(
-    NodePtr from, unsigned output,
-    NodePtr to, unsigned input);
 
 private:
   struct Update {

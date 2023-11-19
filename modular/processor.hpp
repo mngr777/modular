@@ -7,6 +7,10 @@ namespace modular {
 class ProcessorInstance;
 using ProcessorInstancePtr = std::unique_ptr<ProcessorInstance>;
 
+class Processor;
+using ProcessorPtr = std::shared_ptr<Processor>;
+
+
 class ProcessorInstance {
 public:
   ProcessorInstance(
@@ -20,19 +24,19 @@ public:
   virtual void process() = 0;
 
   Slot& input(unsigned n) {
-    return inputs()[n];
+    return _inputs[n];
   }
 
   Slot& output(unsigned n) {
-    return outputs()[n];
+    return _outputs[n];
   }
 
   const Slot& input(unsigned n) const {
-    return inputs()[n];
+    return _inputs[n];
   }
 
   const Slot& output(unsigned n) const {
-    return outputs()[n];
+    return _outputs[n];
   }
 
   SlotList& inputs() {
@@ -50,7 +54,6 @@ public:
   const SlotList& outputs() const {
     return _outputs;
   }
-
 
 private:
   SlotList _inputs;

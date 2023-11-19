@@ -14,19 +14,32 @@ public:
   using Byte = std::uint8_t;
   using Data = Byte*;
 
+  static PackagePtr make(Size size) {
+    return std::make_shared<Package>(size);
+  }
+
+  template<typename T>
+  static PackagePtr make() {
+    auto pkg = make(sizeof(T));
+    pkg->get<T>() = T();
+    return pkg;
+  }
+
   Package(Size size): _data(std::make_unique<Byte[]>(size)) {}
 
   template<typename T>
-  Package(): Package(sizeof(T)) {}
+  void set(const T& value) {
+    get<T>() = value;
+  }
 
   template<typename T>
   T& get() {
-    return reinterpret_cast<T>(*data());
+    return *reinterpret_cast<T*>(data());
   }
 
   template<typename T>
   const T& get() const {
-    return reinterpret_cast<T>(*data());
+    return *reinterpret_cast<T*>(data());
   }
 
   const Size size() const {

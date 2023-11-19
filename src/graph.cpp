@@ -6,7 +6,7 @@ namespace modular {
 // Node
 
 void Graph::Node::connect(Graph::NodePtr other, unsigned output, unsigned input) {
-  if (output >= _processor->inputs().num())
+  if (output >= _processor->outputs().num())
     throw std::runtime_error("invalid output index");
   if (input >= other->_processor->inputs().num())
     throw std::runtime_error("invalid input index");
@@ -33,6 +33,7 @@ void Graph::Node::update_and_process(unsigned input, PackagePtr value) {
 }
 
 
+
 void Graph::Node::do_process() {
   _processor->process();
 
@@ -45,6 +46,13 @@ void Graph::Node::do_process() {
 }
 
 // Graph
+
+Graph::NodePtr Graph::add(Processor& processor) {
+  auto node = std::make_shared<Node>(*this, processor);
+  _nodes.push_back(node);
+  return node;
+}
+
 
 void Graph::connect(
   Graph::NodePtr from, unsigned output,

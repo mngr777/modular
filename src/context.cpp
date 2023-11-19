@@ -3,8 +3,7 @@
 
 namespace modular {
 
-Context::Context(Scheduler& scheduler):
-  _scheduler(scheduler),
+Context::Context():
   _loader_p(std::make_unique<Loader>(*this)) {}
 
 }

@@ -11,7 +11,6 @@ HEADER_FILES = \
 	modular/package.hpp \
 	modular/processor.hpp \
 	modular/registry.hpp \
-	modular/scheduler.hpp \
 	modular/string.hpp \
 	modular/utils/lib.hpp
 
@@ -27,4 +26,28 @@ libmodular_ladir = $(includedir)
 nobase_libmodular_la_HEADERS = $(HEADER_FILES)
 libmodular_la_SOURCES = $(SOURCE_FILES)
 
+## Modules
+pkgmoddir = /usr/local/lib
+MODULE_FLAGS = -module
+MODULE_LIBS = libmodular.la
+pkgmod_LTLIBRARIES =
 
+# Tick
+pkgmod_LTLIBRARIES += tick.la
+tick_la_SOURCES = modules/tick/tick.hpp modules/tick/tick.cpp
+tick_la_LDFLAGS = $(MODULE_FLAGS)
+tick_la_LIBADD = $(MODULE_LIBS)
+
+# Tick print
+pkgmod_LTLIBRARIES += tickprint.la
+tickprint_la_SOURCES = modules/tickprint/tickprint.hpp modules/tickprint/tickprint.cpp
+tickprint_la_LDFLAGS = $(MODULE_FLAGS)
+tickprint_la_LIBADD = $(MODULE_LIBS)
+
+## Tests
+TESTS = test_exec1
+TEST_LIBS = libmodular.la
+check_PROGRAMS = $(TESTS)
+
+test_exec1_SOURCES = tests/test_exec1.cpp
+test_exec1_LDADD = $(TEST_LIBS)
