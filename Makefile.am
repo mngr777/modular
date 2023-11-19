@@ -4,6 +4,7 @@ AM_CXXFLAGS = -std=c++17 -iquote $(srcdir) -I $(srcdir) -Wall -Werror
 
 HEADER_FILES = \
 	modular/context.hpp \
+	modular/graph.hpp \
 	modular/library.hpp \
 	modular/loader.hpp \
 	modular/module.hpp \
@@ -16,6 +17,7 @@ HEADER_FILES = \
 
 SOURCE_FILES = \
 	src/context.cpp \
+	src/graph.cpp \
 	src/loader.cpp \
 	src/module.cpp \
 	src/utils/lib.cpp

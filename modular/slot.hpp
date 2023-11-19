@@ -8,6 +8,18 @@ class Slot {
 public:
   Slot(): _updated(false) {}
 
+  const bool is_updated() const {
+    return _updated;
+  }
+
+  PackagePtr value() {
+    return _value;
+  }
+
+  const PackagePtr value() const {
+    return _value;
+  }
+
   void update(PackagePtr package) {
     // Check if reset??
     _value = package;
@@ -31,8 +43,13 @@ public:
 
   SlotList(Size size): _slots(size) {}
 
-  const Size size() const {
+  const Size num() const {
     return static_cast<Size>(_slots.size());
+  }
+
+  void reset() {
+    for (auto& slot : _slots)
+      slot.reset();
   }
 
   auto& operator[](Size n) {

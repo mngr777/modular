@@ -17,7 +17,23 @@ public:
 
   virtual ~ProcessorInstance() {}
 
-  virtual void exec() = 0;
+  virtual void process() = 0;
+
+  Slot& input(unsigned n) {
+    return inputs()[n];
+  }
+
+  Slot& output(unsigned n) {
+    return outputs()[n];
+  }
+
+  const Slot& input(unsigned n) const {
+    return inputs()[n];
+  }
+
+  const Slot& output(unsigned n) const {
+    return outputs()[n];
+  }
 
   SlotList& inputs() {
     return _inputs;
