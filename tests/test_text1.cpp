@@ -15,8 +15,8 @@ int main(int argc, char** argv) {
   auto spam = context.processors().get("text::spam");
 
   modular::Graph graph;
-  auto spam1 = graph.add(spam);
-  auto spam2 = graph.add(spam, {{"text", "spam, spam, spam, spam!"}});
+  auto spam1 = graph.add(spam, {{"text", "spam, spam, spam, spam!"}});
+  auto spam2 = graph.add(spam);
   auto print1 = graph.add(print);
   spam1->connect(print1, 0, 0);
   spam2->connect(print1, 0, 0);

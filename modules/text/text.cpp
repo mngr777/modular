@@ -9,7 +9,7 @@ using modular::ProcessorInstancePtr;
 using modular::ProcessorParams;
 using modular::String;
 using modular::make_package;
-using modular::read_package;
+using modular::package_data;
 
 
 class PrintProcessorInstance : public ProcessorInstance {
@@ -21,8 +21,8 @@ public:
     PackagePtr package = input(0).value();
     if (!package)
       return;
-    auto value = read_package<String>(package);
-    std::cout << value << std::endl;
+    auto value = package_data<String>(package);
+    std::cout << ">> " << value << std::endl;
   }
 };
 

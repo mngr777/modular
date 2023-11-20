@@ -7,7 +7,7 @@ using modular::Processor;
 using modular::ProcessorInstance;
 using modular::ProcessorInstancePtr;
 using modular::ProcessorParams;
-using modular::read_package;
+using modular::package_data;
 
 class TickprintProcessorInstance : public ProcessorInstance {
 public:
@@ -18,7 +18,7 @@ public:
     PackagePtr package = input(0).value();
     if (!package)
       return;
-    auto tick = read_package<unsigned>(package);
+    auto tick = package_data<unsigned>(package);
     std::cout << "tick: " << tick << std::endl;
   }
 };

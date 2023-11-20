@@ -2,7 +2,9 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstring>
+#include <istream>
 #include <memory>
+#include <ostream>
 #include "string.hpp"
 
 // TODO: refactoring, move getters/setters out
@@ -29,7 +31,9 @@ public:
     return pkg;
   }
 
-  Package(Size size): _data(std::make_unique<Byte[]>(size)) {}
+  Package(Size size):
+    _size(size),
+    _data(std::make_unique<Byte[]>(size)) {}
 
   template<typename T>
   void set(const T& value) {
@@ -83,22 +87,30 @@ PackagePtr make_package(const T& value) {
 
 
 template<typename T>
-T read_package(const Package& package) {
+T package_data(const Package& package) {
   return package.get<T>();
 }
 
 
 template<typename T>
-T read_package(const PackagePtr package) {
-  return read_package<T>(*package);
+T package_data(const PackagePtr package) {
+  return package_data<T>(*package);
 }
 
 
 template<>
 PackagePtr make_package(const String& value);
 
-
 template<>
-String read_package<String>(const Package& package);
+String package_data<String>(const Package& package);
+
+
+void write_package(std::ostream& os, Package& package);
+
+inline void write_package(std::ostream& os, PackagePtr package) {
+  write_package(os, *package);
+}
+
+PackagePtr read_package(std::istream& is);
 
 }

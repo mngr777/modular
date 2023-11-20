@@ -22,6 +22,7 @@ void Graph::Node::process() {
   std::lock_guard lock(_process_mutex);
   do_process();
   _processor->inputs().reset();
+  _processor->outputs().reset();
 }
 
 
@@ -30,6 +31,7 @@ void Graph::Node::update_and_process(unsigned input, PackagePtr value) {
   _processor->input(input).update(value);
   do_process();
   _processor->inputs().reset();
+  _processor->outputs().reset();
 }
 
 
